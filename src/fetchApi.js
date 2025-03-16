@@ -12,5 +12,5 @@ export const fetchGallery = async (userQuery, currentPage) => {
       page: currentPage,
     },
   });
-  return response.data.results;
+  return response;
 };

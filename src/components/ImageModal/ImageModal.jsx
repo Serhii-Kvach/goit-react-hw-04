@@ -13,11 +13,16 @@ export default function ImageModal({ isOpen, onClose, photo }) {
         isOpen={isOpen}
         onRequestClose={onClose}
       >
-        <img src={photo.urls.regular} alt={photo.description} />
-        <p className={css.text}>{photo.description}</p>
-        <p className={css.text}>Likes: {photo.likes}</p>
-        <p className={css.text}>Author: {photo.user.name}</p>
-        <IoClose onClick={onClose} className={css.icon} />
+        <div>
+          <img src={photo.urls.regular} alt={photo.description} />
+          <p className={css.text}>{photo.description}</p>
+          <p className={css.text}>Likes: {photo.likes}</p>
+          <p className={css.text}>Author: {photo.user.name}</p>
+        </div>
+
+        <button className={css.closeBtn} type="button" onClick={onClose}>
+          <IoClose size={30} />
+        </button>
       </Modal>
     </>
   );

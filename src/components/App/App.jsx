@@ -5,6 +5,7 @@ import Loader from "../Loader/Loader";
 import ImageModal from "../ImageModal/ImageModal";
 import SearchBar from "../SearchBar/SearchBar";
 import { fetchGallery } from "../../fetchApi";
+import toast, { Toaster } from "react-hot-toast";
 
 import { useState, useEffect } from "react";
 import css from "./App.module.css";
@@ -17,6 +18,7 @@ function App() {
   const [page, setPage] = useState(1);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [selectFoto, setSelectFoto] = useState(null);
+  const [endOfCollection, setEndOfCollection] = useState(false);
 
   const openModal = (photo) => {
     setSelectFoto(photo);
@@ -29,9 +31,7 @@ function App() {
   };
 
   useEffect(() => {
-    if (query === "") {
-      return;
-    }
+    if (query === "") return;
 
     async function fetchData() {
       try {
@@ -39,10 +39,21 @@ function App() {
         setLoading(true);
 
         const data = await fetchGallery(query, page);
+        const resultsData = data.data.results;
         setFoto((prev) => {
-          return [...prev, ...data];
+          return [...prev, ...resultsData];
         });
-      } catch (error) {
+
+        if (
+          resultsData.length === 0 ||
+          resultsData.length + foto.length >= response.data.total
+        ) {
+          toast("No more images to load.", {
+            icon: "🔚",
+          });
+          setEndOfCollection(true);
+        }
+      } catch {
         setError(true);
       } finally {
         setLoading(false);
@@ -54,6 +65,7 @@ function App() {
   const handleSubmit = (topic) => {
     setPage(1);
     setQuery(topic);
+    setEndOfCollection(false);
     setFoto([]);
   };
   return (
@@ -62,7 +74,7 @@ function App() {
       {foto.length > 0 && <ImageGallery images={foto} getImage={openModal} />}
       {loading && <Loader loading={loading} />}
       {error && <ErrorMessage />}
-      {foto.length !== 0 && (
+      {foto.length > 0 && !loading && !endOfCollection && (
         <LoadMoreBtn onClick={() => setPage(() => page + 1)} />
       )}
 
@@ -73,6 +85,7 @@ function App() {
           photo={selectFoto}
         />
       )}
+      <Toaster position="top-right" />
     </div>
   );
 }

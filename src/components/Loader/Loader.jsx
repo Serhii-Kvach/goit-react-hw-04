@@ -1,4 +1,4 @@
-import { BarLoader } from "react-spinners";
+import BarLoader from "react-spinners/BarLoader";
 import css from "./Loader.module.css";
 
 export default function Loader({ loading }) {
