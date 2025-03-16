@@ -48,9 +48,7 @@ function App() {
           resultsData.length === 0 ||
           resultsData.length + foto.length >= response.data.total
         ) {
-          toast("No more images to load.", {
-            icon: "🔚",
-          });
+          toast("No more images to load.");
           setEndOfCollection(true);
         }
       } catch {
@@ -68,6 +66,7 @@ function App() {
     setEndOfCollection(false);
     setFoto([]);
   };
+
   return (
     <div className={css.container}>
       <SearchBar onSubmit={handleSubmit} />
@@ -75,7 +74,7 @@ function App() {
       {loading && <Loader loading={loading} />}
       {error && <ErrorMessage />}
       {foto.length > 0 && !loading && !endOfCollection && (
-        <LoadMoreBtn onClick={() => setPage(() => page + 1)} />
+        <LoadMoreBtn setPage={setPage} pageCount={page} />
       )}
 
       {modalIsOpen && (
