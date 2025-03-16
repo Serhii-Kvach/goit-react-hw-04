@@ -1,16 +1,10 @@
-import BarLoader from "react-spinners/BarLoader";
+import PropagateLoader from "react-spinners/PropagateLoader";
 import css from "./Loader.module.css";
 
 export default function Loader({ loading }) {
   return (
-    <>
-      <BarLoader
-        className={css.loader}
-        loading={loading}
-        height="7px"
-        width="300px"
-        speedMultiplier="0.5"
-      />
-    </>
+    <div className={css.loader}>
+      <PropagateLoader loading={loading} color="rgb(255, 0, 157)" />
+    </div>
   );
 }

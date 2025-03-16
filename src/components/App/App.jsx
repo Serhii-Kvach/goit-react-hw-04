@@ -14,7 +14,7 @@ function App() {
   const [foto, setFoto] = useState([]);
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [page, setPage] = useState(1);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [selectFoto, setSelectFoto] = useState(null);
@@ -35,7 +35,7 @@ function App() {
 
     async function fetchData() {
       try {
-        setError(false);
+        setIsError(false);
         setLoading(true);
 
         const data = await fetchGallery(query, page);
@@ -46,13 +46,13 @@ function App() {
 
         if (
           resultsData.length === 0 ||
-          resultsData.length + foto.length >= response.data.total
+          resultsData.length + foto.length >= data.data.total
         ) {
           toast("No more images to load.");
           setEndOfCollection(true);
         }
       } catch {
-        setError(true);
+        setIsError(true);
       } finally {
         setLoading(false);
       }
@@ -70,9 +70,9 @@ function App() {
   return (
     <div className={css.container}>
       <SearchBar onSubmit={handleSubmit} />
+      {isError && <ErrorMessage />}
       {foto.length > 0 && <ImageGallery images={foto} getImage={openModal} />}
       {loading && <Loader loading={loading} />}
-      {error && <ErrorMessage />}
       {foto.length > 0 && !loading && !endOfCollection && (
         <LoadMoreBtn setPage={setPage} pageCount={page} />
       )}

@@ -14,7 +14,11 @@ export default function ImageModal({ isOpen, onClose, photo }) {
         onRequestClose={onClose}
       >
         <div>
-          <img src={photo.urls.regular} alt={photo.description} />
+          <img
+            className={css.img}
+            src={photo.urls.regular}
+            alt={photo.description}
+          />
           <p className={css.text}>{photo.description}</p>
           <p className={css.text}>Likes: {photo.likes}</p>
           <p className={css.text}>Author: {photo.user.name}</p>

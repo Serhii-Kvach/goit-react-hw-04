@@ -4,9 +4,9 @@ import css from "./ImageGallery.module.css";
 export default function ImageGallery({ images, getImage }) {
   return (
     <>
-      <ul className={css.list}>
+      <ul className={css.imageList}>
         {images.map((image) => (
-          <li key={image.id}>
+          <li className={css.imageItem} key={image.id}>
             <ImageCard image={image} getImages={getImage} />
           </li>
         ))}

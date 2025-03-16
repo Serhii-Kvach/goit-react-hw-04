@@ -6,7 +6,7 @@ export default function LoadMoreBtn({ setPage, pageCount }) {
   };
   return (
     <>
-      <button className={css.btn} type="button" onClick={handleClick}>
+      <button className={css.button} type="button" onClick={handleClick}>
         Load more
       </button>
     </>
